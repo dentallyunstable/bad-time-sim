@@ -350,9 +350,19 @@ var VPad = {
   update: function () {
     var k;
     for (k in this.keys) { this.last[k] = this.keys[k]; this.keys[k] = 0; }
+    var jump = false;
     for (var i = 0; i < this.sources.length; i++) {
       var s = this.sources[i]();
-      for (k in s) if (s[k]) this.keys[k] = 1;
+      for (k in s) {
+        if (!s[k]) continue;
+        if (k === "jump") jump = true;
+        else this.keys[k] = 1;
+      }
+    }
+    // "jump" means "away from the floor", which depends on which way gravity pulls the blue heart
+    if (jump && typeof heartJumpKey === "function") {
+      var jk = heartJumpKey();
+      if (jk) this.keys[jk] = 1;
     }
   },
   pressed: function (k) { return this.keys[k] > this.last[k]; },
@@ -365,7 +375,8 @@ var KeyboardInput = (function () {
   var map = {
     ArrowUp: "up", KeyW: "up", ArrowDown: "down", KeyS: "down", ArrowLeft: "left", KeyA: "left",
     ArrowRight: "right", KeyD: "right", KeyZ: "confirm", Enter: "confirm", KeyX: "cancel",
-    ShiftLeft: "cancel", ShiftRight: "cancel", KeyC: "menu", ControlLeft: "menu", ControlRight: "menu"
+    ShiftLeft: "cancel", ShiftRight: "cancel", KeyC: "menu", ControlLeft: "menu", ControlRight: "menu",
+    Space: "jump"
   };
   window.addEventListener("keydown", function (e) {
     if (map[e.code]) {

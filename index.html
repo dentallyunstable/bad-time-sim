@@ -39,6 +39,7 @@
   .btn small { font-size: 0.6em; margin-top: 2px; }
   .btn.z { border-color: #ff4040; }
   .btn.x { border-color: #ffd34a; }
+  .btn.j { border-color: #3c7cff; }
   .btn.down { background: rgba(255,255,255,0.45); }
   .topbtn {
     position: absolute; top: 8px; width: 40px; height: 40px; border-radius: 8px; border: 2px solid rgba(255,255,255,0.6);
@@ -87,6 +88,7 @@
   <div class="joy-knob" id="joyKnob"></div>
   <div class="btn z" id="btnZ"><b>Z</b><small>OK</small></div>
   <div class="btn x" id="btnX"><b>X</b><small>BACK/SLOW</small></div>
+  <div class="btn j" id="btnJ"><b>&#9650;</b><small>JUMP</small></div>
 </div>
 <div class="topbtn" id="btnSettings" style="right: 8px" title="Settings">&#9881;</div>
 <div class="topbtn" id="btnFull" style="right: 56px" title="Fullscreen">&#x26F6;</div>
@@ -97,8 +99,8 @@
     <p id="loadText">Loading...</p>
     <div id="progress"><div></div></div>
     <button class="bigbtn hidden" id="startBtn">TAP TO START</button>
-    <p style="font-size:13px;color:#aaa;margin-top:14px">Phone: left side = joystick, Z = confirm, X = back / move slowly.<br>
-      Keyboard: arrows/WASD, Z/Enter, X/Shift.</p>
+    <p style="font-size:13px;color:#aaa;margin-top:14px">Phone: left side = joystick, Z = confirm, X = back / move slowly,<br>JUMP = jump with the blue heart (hold for a higher jump).<br>
+      Keyboard: arrows/WASD, Z/Enter, X/Shift, Space = jump.</p>
   </div>
 </div>
 

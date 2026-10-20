@@ -755,6 +755,14 @@ function moveHeart() {
     }
   }
 }
+// The direction key that makes the blue heart jump, or null when jumping is not possible.
+var JUMP_KEYS = { 0: "left", 90: "up", 180: "right", 270: "down" };
+function heartJumpKey() {
+  if (Game.scene !== "battle" || !B) return null;
+  var h = B.heart;
+  if (h.mode !== HEARTMODE_BLUE || !h.move) return null;
+  return JUMP_KEYS[((Math.round(h.angle) % 360) + 360) % 360] || null;
+}
 function controlHeart() {
   var h = B.heart;
   if (!h.move) return;
@@ -768,7 +776,7 @@ function controlHeart() {
   }
   if (h.mode !== HEARTMODE_BLUE) return;
   var a = ((Math.round(h.angle) % 360) + 360) % 360;
-  var jumpKey = { 0: "left", 90: "up", 180: "right", 270: "down" }[a];
+  var jumpKey = JUMP_KEYS[a];
   var d = heartDir();
   if (jumpKey) {
     if (VPad.pressed(jumpKey) && heartCheckSolid(d.x, d.y)) {

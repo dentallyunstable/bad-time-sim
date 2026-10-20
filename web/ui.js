@@ -6,7 +6,8 @@
   var g = canvas.getContext("2d");
   var controls = document.getElementById("controls");
   var joyBase = document.getElementById("joyBase"), joyKnob = document.getElementById("joyKnob"), joyDz = document.getElementById("joyDz");
-  var btnZ = document.getElementById("btnZ"), btnX = document.getElementById("btnX");
+  var btnZ = document.getElementById("btnZ"), btnX = document.getElementById("btnX"), btnJ = document.getElementById("btnJ");
+  var BUTTONS = [[btnZ, "confirm"], [btnX, "cancel"], [btnJ, "jump"]];
 
   // ------------------------------------------------------------ settings
   var DEFAULTS = { joySize: "m", deadzone: "med", joyMode: "float", opacity: "0.55", showControls: "auto", hitbox: "4" };
@@ -105,8 +106,11 @@
       var jx = Math.max(R + 10, side / 2);
       L.joyRest = { x: jx, y: vh - Math.max(R + 20, vh * 0.32) };
       L.btnR = Math.max(34, Math.min(R * 0.62, vh * 0.15));
-      var bx = vw - Math.max(L.btnR * 1.6 + 10, side / 2);
-      placeButtons(bx + L.btnR * 0.55, vh * 0.48, bx - L.btnR * 0.75, vh * 0.48 + L.btnR * 2.3);
+      L.btnR = Math.max(32, Math.min(L.btnR, vh * 0.13));
+      var r = L.btnR, bx = vw - Math.max(r * 1.6 + 10, side / 2);
+      // JUMP at the bottom where the thumb rests, Z above it, X to the left
+      var jy = vh - r - Math.max(14, vh * 0.06);
+      placeButtons(bx + r * 0.6, jy - r * 2.35, bx - r * 1.45, jy - r * 1.05, bx + r * 0.6, jy);
     } else {
       // Portrait: game at the top, controls underneath
       cw = vw; ch = cw * 3 / 4;
@@ -117,7 +121,8 @@
       if (below < R * 2 + 20) midY = vh - R - 20; // not enough room: overlap the bottom of the game
       L.joyRest = { x: Math.max(R + 16, vw * 0.27), y: midY };
       L.btnR = Math.max(34, Math.min(R * 0.62, vw * 0.11));
-      placeButtons(vw - L.btnR - 16, midY - L.btnR * 0.9, vw - L.btnR * 3.4, midY + L.btnR * 0.9);
+      var pr = L.btnR;
+      placeButtons(vw - pr - 16, midY - pr * 1.25, vw - pr * 3.3, midY, vw - pr - 16, midY + pr * 1.25);
     }
     L.R = R;
     canvas.style.width = cw + "px"; canvas.style.height = ch + "px";
@@ -125,11 +130,12 @@
     L.leftZone = vw * 0.5;
     if (!joy.active) drawJoy(L.joyRest.x, L.joyRest.y, 0, 0);
   }
-  function placeButtons(zx, zy, xx, xy) {
-    place(btnZ, zx, zy, L.btnR);
-    place(btnX, xx, xy, L.btnR);
-    btnZ.style.fontSize = btnX.style.fontSize = (L.btnR * 0.42) + "px";
-    btnZ.rect = { x: zx, y: zy }; btnX.rect = { x: xx, y: xy };
+  function placeButtons(zx, zy, xx, xy, jx, jy) {
+    [[btnZ, zx, zy], [btnX, xx, xy], [btnJ, jx, jy]].forEach(function (b) {
+      place(b[0], b[1], b[2], L.btnR);
+      b[0].style.fontSize = (L.btnR * 0.42) + "px";
+      b[0].rect = { x: b[1], y: b[2] };
+    });
   }
 
   // ------------------------------------------------------------ joystick
@@ -184,11 +190,11 @@
   var btnPointers = {}; // pointerId -> "confirm" | "cancel"
   function buttonAt(x, y) {
     var best = null, bestD = Infinity;
-    [[btnZ, "confirm"], [btnX, "cancel"]].forEach(function (b) {
+    BUTTONS.forEach(function (b) {
       var r = b[0].rect;
       if (!r) return;
       var d = Math.hypot(x - r.x, y - r.y);
-      if (d < L.btnR * 1.25 && d < bestD) { best = b[1]; bestD = d; }
+      if (d < L.btnR * 1.15 && d < bestD) { best = b[1]; bestD = d; }
     });
     return best;
   }
@@ -223,8 +229,7 @@
   VPad.sources.push(function () {
     var s = Object.assign({}, joy.dirs);
     for (var id in btnPointers) s[btnPointers[id]] = 1;
-    btnZ.classList.toggle("down", !!s.confirm);
-    btnX.classList.toggle("down", !!s.cancel);
+    BUTTONS.forEach(function (b) { b[0].classList.toggle("down", !!s[b[1]]); });
     return s;
   });
 

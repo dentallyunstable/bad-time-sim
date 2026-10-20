@@ -7,9 +7,10 @@ Play in a browser (phones too)
 It uses the same art, sounds and attack files as the original Construct 2 project, so it needs no extra tools.
 
 * **On a phone:** the left half of the screen is a joystick, the **Z** button confirms and the **X** button goes back
-  (hold it to move slowly). It works sideways (landscape) and upright (portrait). The gear button opens settings
+  (hold it to move slowly). The **JUMP** button jumps with the blue heart: tap for a small jump, hold for a higher one.
+  It always jumps away from the floor, even when gravity pulls sideways or up. It works sideways (landscape) and upright (portrait). The gear button opens settings
   for joystick size, dead zone (how far you must push before the heart moves), button visibility and the heart hitbox.
-* **On a computer:** arrow keys / WASD to move, Z or Enter to confirm, X or Shift to go back.
+* **On a computer:** arrow keys / WASD to move, Z or Enter to confirm, X or Shift to go back, Space to jump.
 * To host it, turn on GitHub Pages for this repository (Settings → Pages → deploy from the branch, folder `/`)
   and open the link it gives you. On Android, use Chrome's menu → *Add to Home screen* to get an app-like icon.
 * To try it on your own computer, run any static web server in this folder (for example `npx http-server`)
