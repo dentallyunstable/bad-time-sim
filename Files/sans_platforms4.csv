@@ -2,7 +2,7 @@
 0,HeartTeleport,320,376,,,,,
 0,HeartMode,1,,,,,,
 0,TLPause,,,,,,,
-0,Platform,151,336,41,0,90,1,
+0,Platform,151,336,41,0,90,1,90
 0,HeartTeleport,175,327,,,,,
 0,BoneVRepeat,528,366,40,0,60,60,15
 0,BoneVRepeat,283,267,40,3,90,11,85

@@ -109,6 +109,7 @@ Creates a platform. BooleanReverse make it change direction
 * Direction
 * Speed
 * BooleanReverse
+* Acceleration (optional, web version only): pixels per second squared. The platform starts still and speeds up to Speed.
 
 ### PlatformRepeat ###
 Creates many platforms
