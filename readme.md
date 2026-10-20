@@ -10,10 +10,3 @@ This project is a clone of the sans fight from [Undertale](http://undertale.com/
   and open the link it gives you. On Android, use Chrome's menu → *Add to Home screen* to get an app-like icon.
 * To try it on your own computer, run any static web server in this folder (for example `npx http-server`)
   and open `http://localhost:8080`. Opening `index.html` directly from disk does not work because browsers block loading the attack files that way.
-
-Like in Undertale, the Sans fight has no invincibility frames: staying inside bones keeps hurting you, and KARMA (KR)
-keeps draining HP after a hit.
-
-Known Issues
-------------
-- Sans dialog is missing. I may add something at some future date, but I have no intention of putting the original text in, as it really only makes sense in the context of the whole game.
