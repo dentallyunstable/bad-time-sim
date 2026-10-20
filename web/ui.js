@@ -135,6 +135,7 @@
       place(b[0], b[1], b[2], L.btnR);
       b[0].style.fontSize = (L.btnR * 0.42) + "px";
       b[0].rect = { x: b[1], y: b[2] };
+      b[0].classList.add("placed");
     });
   }
 
